@@ -393,6 +393,7 @@ void ComputeWidom::init()
   // used for attempted atom or molecule deletions
   // skip if already exists from previous init()
 
+  /*
   if (full_flag && !exclusion_group_bit) {
     char **group_arg = new char*[4];
 
@@ -424,6 +425,7 @@ void ComputeWidom::init()
     delete [] group_arg;
     delete [] arg;
   }
+  */
 
   // get mass
   gas_mass = atom->mass[nwidom_type];
@@ -744,9 +746,10 @@ void ComputeWidom::atomic_insertion_full()
 
   // Reset the insertion
   atom->natoms--;
-  if (proc_flag) atom->nlocal--;
+  if (proc_flag) atom->nlocal--; 
   if (force->kspace) force->kspace->qsum_qsq();
   if (force->pair->tail_flag) force->pair->reinit();
+  energy_full(); // Must call the forces again
 }
 
 /* ----------------------------------------------------------------------
